@@ -1,9 +1,11 @@
 from flask import Flask, render_template_string, request, jsonify
-import ollama
+from openai import OpenAI
+import os
 
 app = Flask(__name__)
 
-client = ollama.Client(host='http://127.0.0.1:11434')
+# Secure: read API key from environment variable
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 PERSONALITY_PROMPT = """
 You are Rishika Bhandari.
@@ -14,6 +16,7 @@ Confident, analytical, emotionally deep.
 
 Respond confidently, intelligently, and authentically.
 Keep answers powerful and reflective.
+Keep answers concise but impactful.
 """
 
 @app.route("/")
@@ -122,15 +125,17 @@ def home():
 def ask():
     user_input = request.json["message"]
 
-    response = client.chat(
-        model="llama3",
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": PERSONALITY_PROMPT},
             {"role": "user", "content": user_input}
         ]
     )
 
-    return jsonify({"reply": response["message"]["content"]})
+    return jsonify({
+        "reply": completion.choices[0].message.content
+    })
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
