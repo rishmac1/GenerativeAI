@@ -1,11 +1,13 @@
 from flask import Flask, render_template_string, request, jsonify
 from openai import OpenAI
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 
 # Secure: read API key from environment variable
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 PERSONALITY_PROMPT = """
 You are Rishika Bhandari.
