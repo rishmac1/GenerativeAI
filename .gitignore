@@ -19,3 +19,9 @@ env/
 # IDE
 .vscode/
 .idea/
+
+
+#HTML 
+index.html
+#CSS
+style.css
