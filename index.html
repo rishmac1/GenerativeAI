@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rishika Voice Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Rishika AI</h1>
+    <div id="chat-box"></div>
+
+    <div class="controls">
+        <button id="mic-btn">🎤</button>
+    </div>
+</div>
+
+<script>
+const micBtn = document.getElementById("mic-btn");
+const chatBox = document.getElementById("chat-box");
+
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.lang = "en-US";
+
+micBtn.onclick = () => {
+    recognition.start();
+    micBtn.classList.add("listening");
+};
+
+recognition.onresult = async function(event) {
+    const transcript = event.results[0][0].transcript;
+    addMessage("You", transcript);
+
+    const response = await fetch("/ask", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: transcript})
+    });
+
+    const data = await response.json();
+    addMessage("Rishika AI", data.reply);
+
+    speak(data.reply);
+};
+
+function addMessage(sender, text) {
+    const msg = document.createElement("div");
+    msg.className = "message";
+    msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function speak(text) {
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    speech.rate = 1;
+    window.speechSynthesis.speak(speech);
+}
+
+recognition.onend = () => {
+    micBtn.classList.remove("listening");
+};
+</script>
+
+</body>
+</html>

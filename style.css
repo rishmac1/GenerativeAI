@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #141E30, #243B55);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 400px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+#chat-box {
+    height: 300px;
+    overflow-y: auto;
+    text-align: left;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+#mic-btn {
+    font-size: 24px;
+    padding: 15px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background-color: #ff4b5c;
+    color: white;
+    transition: 0.3s;
+}
+
+#mic-btn:hover {
+    transform: scale(1.1);
+}
+
+.listening {
+    background-color: #00ff99 !important;
+}
