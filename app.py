@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Secure: read API key from environment variable
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAI(api_key="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")
 
 PERSONALITY_PROMPT = """
 You are Rishika Bhandari.
