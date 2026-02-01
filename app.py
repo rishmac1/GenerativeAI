@@ -3,8 +3,8 @@ from openai import OpenAI
 import os
 
 app = Flask(__name__)
-
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY")))
+################Initializing the Open AI connection Setting ##############
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 PERSONALITY_PROMPT = """
 You are Rishika Bhandari.
@@ -245,3 +245,4 @@ def ask():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
